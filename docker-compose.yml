@@ -1,0 +1,50 @@
+services:
+  # BACKEND
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: modulith-backend
+    networks:
+      - fullstack-net
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/movie_db
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+    depends_on:
+      - mariadb
+
+  # FRONTEND
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vue-frontend
+    networks:
+      - fullstack-net
+    expose:
+      - "5173"
+
+  # DATABASE
+  mariadb:
+    image: mariadb:11
+    container_name: modulith-mariadb
+    restart: always
+    environment:
+      - MARIADB_ROOT_PASSWORD=root123
+      - MARIADB_DATABASE=movie_db
+      - MARIADB_USER=admin
+      - MARIADB_PASSWORD=admin
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - fullstack-net
+
+networks:
+  fullstack-net:
+    driver: bridge
+
+volumes:
+  mariadb_data:
