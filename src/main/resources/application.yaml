@@ -1,3 +1,8 @@
 spring:
   application:
     name: Movie Tracker
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

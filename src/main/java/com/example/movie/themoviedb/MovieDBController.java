@@ -27,8 +27,32 @@ public class MovieDBController {
 
 
     @GetMapping("/movie/search")
-    public ResponseEntity<String> getMoviesByName(@RequestParam String name) {
-        String url = API_URL + "/search/movie" + "?query=" + name;
+    public ResponseEntity<String> getMoviesByName(@RequestParam String name, @RequestParam(defaultValue = "1") String page) {
+        String url = API_URL + "/search/movie" + "?query=" + name + "&page=" + page;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(movieDbApiKey);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<Map<String, String>> request = new HttpEntity<>(
+                headers
+        );
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                request,
+                String.class
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                response.getBody()
+        );
+    }
+
+    @GetMapping("/TV/search")
+    public ResponseEntity<String> getTVByName(@RequestParam String name, @RequestParam(defaultValue = "1") String page) {
+        String url = API_URL + "/search/TV" + "?query=" + name + "&page=" + page;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(movieDbApiKey);
