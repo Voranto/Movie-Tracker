@@ -10,5 +10,4 @@ public class MovieTrackerApplication {
 		SpringApplication.run(MovieTrackerApplication.class, args);
 	}
 
-
 }
