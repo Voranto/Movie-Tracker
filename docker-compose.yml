@@ -24,8 +24,8 @@ services:
     container_name: vue-frontend
     networks:
       - fullstack-net
-    expose:
-      - "5173"
+    ports:
+      - "5173:80"
 
   # DATABASE
   mariadb:
