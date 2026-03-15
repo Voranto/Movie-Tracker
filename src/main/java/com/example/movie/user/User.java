@@ -11,7 +11,6 @@ import jakarta.validation.constraints.NotBlank;
 @Entity
 @Table(name = "user")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -34,5 +33,32 @@ public class User {
         this.email = email;
         this.passwordHash = passwordHash;
         this.friendsList = new ArrayList<>();
+    }
+
+    public User() {
+
+    }
+    public UUID getId() {
+        return id;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public List<User> getFriendsList() {
+        return friendsList;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void addFriend(User friend) {
+        this.friendsList.add(friend);
     }
 }
